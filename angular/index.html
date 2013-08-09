@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us">
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="style.css" rel="stylesheet" type="text/css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+<script>
+window.RefreshCtrl= function($scope,$compile){
+    $scope.refresh = function(){
+        $("#dynamicContent").html(
+          $compile(
+            "<button ng-click='count = count + 1' ng-init='count=0'>Increment</button><span>count: {{count}} </span>"
+          )($scope));
+        $scope.$apply();
+    }
+}
+        
+$(document).ready(function(){
+   $("#refreshButton").click(function() {
+      var scope = angular.element('#dynamicContent').scope();
+      scope.refresh();
+    });
+            
+});  
+</script>
+</head>
+<body>
+<div ng-app="" id='content' ng-controller='RefreshCtrl'>
+  <div id='dynamicContent'>
+      <button ng-click="count = count + 1" ng-init="count=0">
+        Increment
+      </button>
+      <span>count: {{count}} </span>
+  </div>
+  
+  <button id='refreshButton'>
+    Refresh
+  </button>
+</div>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us">
+<head>
+<title>jCarousel Examples</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+<!--
+  jQuery library
+-->
+<script type="text/javascript" src="../lib/jquery-1.9.1.min.js"></script>
+<!--
+  jCarousel library
+-->
+<script type="text/javascript" src="../lib/jquery.jcarousel.min.js"></script>
+<!--
+  jCarousel skin stylesheet
+-->
+<!-- <link rel="stylesheet" type="text/css" href="../skins/tango/skin.css" /> -->
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+    
+    //jCarousel Plugin
+    $('#carousel').jcarousel({
+        vertical: true,    //display vertical carousel
+        scroll: 1,    //auto scroll
+        auto: 2,    //the speed of scrolling
+        wrap: 'last',    //go back to top when reach last item
+        initCallback: mycarousel_initCallback    //extra called back function
+    });
+    //Front page Carousel - Initial Setup
+    //set all the item to full opacity
+    $('div#slideshow-carousel a img').css({'opacity': '0.5'});
+    
+    //readjust the first item to 50% opacity
+    $('div#slideshow-carousel a img:first').css({'opacity': '1.0'});
+    
+    //append the arrow to the first item
+    $('div#slideshow-carousel li a:first').append('')
+    //Add hover and click event to each of the item in the carousel
+$('div#slideshow-carousel li a').hover(
+    function () {
+    
+    //check to make sure the item is not selected
+        if (!$(this).has('span').length) {
+            //reset all the item's opacity to 50%
+        $('div#slideshow-carousel li a img').stop(true, true).css({'opacity': '0.5'});
+        
+        //adust the current selected item to full opacity
+             $(this).stop(true, true).children('img').css({'opacity': '1.0'});
+        }        
+    },
+    function () {
+        
+    //on mouse out, reset all the item back to 50% opacity
+        $('div#slideshow-carousel li a img').stop(true, true).css({'opacity': '0.5'});
+        
+        //reactivate the selected item by loop through them and look for the one
+        //that has the span arrow
+        $('div#slideshow-carousel li a').each(function () {
+                //found the span and reset the opacity back to full opacity
+            if ($(this).has('span').length) $(this).children('img').css({'opacity': '1.0'});
+        });
+        
+    }
+    ).click(function () {
+        //remove the span.arrow
+     //$('span.arrow').remove();
+    
+     //append it to the current item
+        $(this).append('');
+        
+        //remove the active class from the slideshow main
+        $('div#slideshow-main li').removeClass('active');
+        
+        //display the main image by appending active class to it.
+    $('div#slideshow-main li.' + $(this).attr('rel')).addClass('active');    
+    
+    return false;
+    });
+});
+//Carousel Tweaking
+function mycarousel_initCallback(carousel) {
+    
+    // Pause autoscrolling if the user moves with the cursor over the clip.
+    // resume otherwise
+    carousel.clip.hover(function() {
+        carousel.stopAuto();
+    }, function() {
+        carousel.startAuto();
+    });
+}
+
+</script>
+
+</head>
+<body>
+    <div id="welcomeHero">
+                
+        <div id="slideshow-main">
+            <ul>
+                <li class="p1 active">
+                    <a href="#">
+                        <img src="http://static.flickr.com/66/199481236_dc98b5abb3_s.jpg" width="430" height="290" alt=""/>
+                        <span class="opacity"></span>
+                        <span class="content"><h1>Title 1</h1><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p></span>
+                    </a>
+                </li>
+                <li class="p2">
+                    <a href="#">
+                        <img src="http://static.flickr.com/75/199481072_b4a0d09597_s.jpg" width="430" height="290" alt=""/>
+                        <span class="opacity"></span>
+                        <span class="content"><h1>Title 2</h1><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p></span>
+                    </a>
+                </li>
+                <li class="p3">
+                    <a href="#">
+                        <img src="http://static.flickr.com/57/199481087_33ae73a8de_s.jpg" width="430" height="290" alt=""/>
+                        <span class="opacity"></span>
+                        <span class="content"><h1>Title 3</h1><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p></span>
+                    </a>
+                </li>
+                <li class="p4">
+                    <a href="#">
+                        <img src="http://static.flickr.com/75/199481072_b4a0d09597_s.jpg" width="430" height="290" alt=""/>
+                        <span class="opacity"></span>
+                        <span class="content"><h1>Title 2</h1><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p></span>
+                    </a>
+                </li>
+                <li class="p5">
+                    <a href="#">
+                        <img src="http://static.flickr.com/57/199481087_33ae73a8de_s.jpg" width="430" height="290" alt=""/>
+                        <span class="opacity"></span>
+                        <span class="content"><h1>Title 3</h1><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p></span>
+                    </a>
+                </li>
+            </ul>                                        
+        </div>
+                    
+        <div id="slideshow-carousel">                
+             <ul id="carousel" class="jcarousel jcarousel-skin-tango">
+                <li><a href="#" rel="p1"><img src="http://static.flickr.com/66/199481236_dc98b5abb3_s.jpg" width="206" height="95" alt="#"/></a></li>
+                <li><a href="#" rel="p2"><img src="http://static.flickr.com/75/199481072_b4a0d09597_s.jpg" width="206" height="95" alt="#"/></a></li>
+                <li><a href="#" rel="p3"><img src="http://static.flickr.com/57/199481087_33ae73a8de_s.jpg" width="206" height="95" alt="#"/></a></li>
+                <li><a href="#" rel="p4"><img src="http://static.flickr.com/75/199481072_b4a0d09597_s.jpg" width="206" height="95" alt="#"/></a></li>
+                <li><a href="#" rel="p5"><img src="http://static.flickr.com/57/199481087_33ae73a8de_s.jpg" width="206" height="95" alt="#"/></a></li>
+             </ul>
+        </div>
+            
+        <div class="clear"></div>
+            
+    </div>
+</body>
+</html>
